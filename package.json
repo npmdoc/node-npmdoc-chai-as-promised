@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"chai-as-promised",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "chai-as-promised",
+    "description": "api documentation for [chai-as-promised (v6.0.0)](https://github.com/domenic/chai-as-promised#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-chai-as-promised.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-chai-as-promised) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-chai-as-promised.svg)](https://travis-ci.org/npmdoc/node-npmdoc-chai-as-promised)",
     "devDependencies": {
         "chai-as-promised": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-chai-as-promised",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-chai-as-promised",
+    "keywords": [
+        "documentation",
+        "chai-as-promised"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_chai_as_promised.js",
+    "name": "npmdoc-chai-as-promised",
+    "nameAlias": "npmdoc_chai_as_promised",
+    "nameOriginal": "npmdoc-chai-as-promised",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-chai-as-promised.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
