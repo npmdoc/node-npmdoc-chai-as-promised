@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/domenic/chai-as-promised#readme"
-
-    >chai-as-promised (v6.0.0)</a>
+    <a href="https://github.com/domenic/chai-as-promised#readme">chai-as-promised (v6.0.0)</a>
 </h1>
 <h4>Extends Chai with assertions about promises.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.chai-as-promised">module chai-as-promised</a><ol>
 
@@ -135,23 +128,23 @@
     function isLegacyJQueryPromise(thenable) {
         // jQuery promises are Promises/A+-compatible since 3.0.0. jQuery 3.0.0 is also the first version
         // to define the catch method.
-        return typeof thenable.catch !== &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.always === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.done === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.fail === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.pipe === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.progress === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.state === &#x22;function&#x22;;
+        return typeof thenable.catch !== "function" &amp;&amp;
+               typeof thenable.always === "function" &amp;&amp;
+               typeof thenable.done === "function" &amp;&amp;
+               typeof thenable.fail === "function" &amp;&amp;
+               typeof thenable.pipe === "function" &amp;&amp;
+               typeof thenable.progress === "function" &amp;&amp;
+               typeof thenable.state === "function";
     }
 
     function assertIsAboutPromise(assertion) {
-        if (typeof assertion._obj.then !== &#x22;function&#x22;) {
-            throw new TypeError(utils.inspect(assertion._obj) + &#x22; is not a thenable.&#x22;);
+        if (typeof assertion._obj.then !== "function") {
+            throw new TypeError(utils.inspect(assertion._obj) + " is not a thenable.");
         }
         if (isLegacyJQueryPromise(assertion._obj)) {
-            throw new TypeError(&#x22;Chai as Promised is incompatible with thenables of jQuery&#x3c;3.0.0, sorry! Please &#x22; +
-                                &#x22;upgrade jQuery or use another Promises/A+ compatible library (see &#x22; +
-                                &#x22;http://promisesaplus.com/).&#x22;);
+            throw new TypeError("Chai as Promised is incompatible with thenables of jQuery&lt;3.0.0, sorry! Please " +
+                                "upgrade jQuery or use another Promises/A+ compatible library (see " +
+                                "http://promisesaplus.com/).");
         }
     }
 
@@ -184,10 +177,10 @@
 
     function getBasePromise(assertion) {
         // We need to chain subsequent asserters on top of ones in the chain already (consider
-        // `eventually.have.property(&#x22;foo&#x22;).that.equals(&#x22;bar&#x22;)`), only running them after the existing ones pass.
+        // `eventually.have.property("foo").that.equals("bar")`), only running them after the existing ones pass.
         // So the first base-promise is `assertion._obj`, but after that we use the assertions themselves, i.e.
         // previously derived promises, to chain off of.
-        return typeof assertion.then === &#x22;function&#x22; ? assertion : assertion._obj;
+        return typeof assertion.then === "function" ? assertion : assertion._obj;
     }
 
     function getReasonName(reason) {
@@ -203,18 +196,18 @@
         propertyDescs[name] = Object.getOwnPropertyDescriptor(Assertion.prototype, name);
     });
 
-    property(&#x22;fulfilled&#x22;, function () {
+    property("fulfilled", function () {
         var that = this;
         var derivedPromise = getBasePromise(that).then(
             function (value) {
                 assertIfNegated(that,
-                                &#x22;expected promise not to be fulfilled but it was fulfilled with #{act}&#x22;,
+                                "expected promise not to be fulfilled but it was fulfilled with #{act}",
                                 { actual: value });
                 return value;
             },
             function (reason) {
                 assertIfNotNegated(that,
-                                   &#x22;expected promise to be fulfilled but it was rejected with #{act}&#x22;,
+                                   "expected promise to be fulfilled but it was rejected with #{act}",
                                    { actual: getReasonName(reason) });
                 return reason;
             }
@@ -247,23 +240,23 @@
     function isLegacyJQueryPromise(thenable) {
         // jQuery promises are Promises/A+-compatible since 3.0.0. jQuery 3.0.0 is also the first version
         // to define the catch method.
-        return typeof thenable.catch !== &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.always === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.done === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.fail === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.pipe === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.progress === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.state === &#x22;function&#x22;;
+        return typeof thenable.catch !== "function" &amp;&amp;
+               typeof thenable.always === "function" &amp;&amp;
+               typeof thenable.done === "function" &amp;&amp;
+               typeof thenable.fail === "function" &amp;&amp;
+               typeof thenable.pipe === "function" &amp;&amp;
+               typeof thenable.progress === "function" &amp;&amp;
+               typeof thenable.state === "function";
     }
 
     function assertIsAboutPromise(assertion) {
-        if (typeof assertion._obj.then !== &#x22;function&#x22;) {
-            throw new TypeError(utils.inspect(assertion._obj) + &#x22; is not a thenable.&#x22;);
+        if (typeof assertion._obj.then !== "function") {
+            throw new TypeError(utils.inspect(assertion._obj) + " is not a thenable.");
         }
         if (isLegacyJQueryPromise(assertion._obj)) {
-            throw new TypeError(&#x22;Chai as Promised is incompatible with thenables of jQuery&#x3c;3.0.0, sorry! Please &#x22; +
-                                &#x22;upgrade jQuery or use another Promises/A+ compatible library (see &#x22; +
-                                &#x22;http://promisesaplus.com/).&#x22;);
+            throw new TypeError("Chai as Promised is incompatible with thenables of jQuery&lt;3.0.0, sorry! Please " +
+                                "upgrade jQuery or use another Promises/A+ compatible library (see " +
+                                "http://promisesaplus.com/).");
         }
     }
 
@@ -296,10 +289,10 @@
 
     function getBasePromise(assertion) {
         // We need to chain subsequent asserters on top of ones in the chain already (consider
-        // `eventually.have.property(&#x22;foo&#x22;).that.equals(&#x22;bar&#x22;)`), only running them after the existing ones pass.
+        // `eventually.have.property("foo").that.equals("bar")`), only running them after the existing ones pass.
         // So the first base-promise is `assertion._obj`, but after that we use the assertions themselves, i.e.
         // previously derived promises, to chain off of.
-        return typeof assertion.then === &#x22;function&#x22; ? assertion : assertion._obj;
+        return typeof assertion.then === "function" ? assertion : assertion._obj;
     }
 
     function getReasonName(reason) {
@@ -315,18 +308,18 @@
         propertyDescs[name] = Object.getOwnPropertyDescriptor(Assertion.prototype, name);
     });
 
-    property(&#x22;fulfilled&#x22;, function () {
+    property("fulfilled", function () {
         var that = this;
         var derivedPromise = getBasePromise(that).then(
             function (value) {
                 assertIfNegated(that,
-                                &#x22;expected promise not to be fulfilled but it was fulfilled with #{act}&#x22;,
+                                "expected promise not to be fulfilled but it was fulfilled with #{act}",
                                 { actual: value });
                 return value;
             },
             function (reason) {
                 assertIfNotNegated(that,
-                                   &#x22;expected promise to be fulfilled but it was rejected with #{act}&#x22;,
+                                   "expected promise to be fulfilled but it was rejected with #{act}",
                                    { actual: getReasonName(reason) });
                 return reason;
             }
@@ -390,3 +383,4 @@
     ]
 </div>
 </div>
+</body></html>
