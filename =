@@ -1,4 +1,4 @@
-npmdoc-chai-as-promised@0.0.1 /home/travis/build/npmdoc/node-npmdoc-chai-as-promised
+npmdoc-chai-as-promised@0.0.2 /home/travis/build/npmdoc/node-npmdoc-chai-as-promised
 └─┬ chai@3.5.0 
   ├── assertion-error@1.0.2 
   ├─┬ deep-eql@0.1.3 
