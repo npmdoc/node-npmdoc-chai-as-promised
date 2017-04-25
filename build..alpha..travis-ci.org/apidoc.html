@@ -72,24 +72,6 @@
 
         <li>
 
-            <a class="apidocElementLiA" href="#apidoc.element.chai-as-promised.chai_as_promised">
-            function <span class="apidocSignatureSpan">chai-as-promised.</span>chai_as_promised
-            <span class="apidocSignatureSpan">(chai, utils)</span>
-            </a>
-
-        </li>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.chai-as-promised.toString">
-            function <span class="apidocSignatureSpan">chai-as-promised.</span>toString
-            <span class="apidocSignatureSpan">()</span>
-            </a>
-
-        </li>
-
-        <li>
-
             <a class="apidocElementLiA" href="#apidoc.element.chai-as-promised.transferPromiseness">
             function <span class="apidocSignatureSpan">chai-as-promised.</span>transferPromiseness
             <span class="apidocSignatureSpan">(assertion, promise)</span>
@@ -227,133 +209,6 @@
 
 
     <h2>
-        <a href="#apidoc.element.chai-as-promised.chai_as_promised" id="apidoc.element.chai-as-promised.chai_as_promised">
-        function <span class="apidocSignatureSpan">chai-as-promised.</span>chai_as_promised
-        <span class="apidocSignatureSpan">(chai, utils)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">chai_as_promised = function (chai, utils) {
-    var Assertion = chai.Assertion;
-    var assert = chai.assert;
-
-    // If we are using a version of Chai that has checkError on it,
-    // we want to use that version to be consistent. Otherwise, we use
-    // what was passed to the factory.
-    if (utils.checkError) {
-        checkError = utils.checkError;
-    }
-
-    function isLegacyJQueryPromise(thenable) {
-        // jQuery promises are Promises/A+-compatible since 3.0.0. jQuery 3.0.0 is also the first version
-        // to define the catch method.
-        return typeof thenable.catch !== &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.always === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.done === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.fail === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.pipe === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.progress === &#x22;function&#x22; &#x26;&#x26;
-               typeof thenable.state === &#x22;function&#x22;;
-    }
-
-    function assertIsAboutPromise(assertion) {
-        if (typeof assertion._obj.then !== &#x22;function&#x22;) {
-            throw new TypeError(utils.inspect(assertion._obj) + &#x22; is not a thenable.&#x22;);
-        }
-        if (isLegacyJQueryPromise(assertion._obj)) {
-            throw new TypeError(&#x22;Chai as Promised is incompatible with thenables of jQuery&#x3c;3.0.0, sorry! Please &#x22; +
-                                &#x22;upgrade jQuery or use another Promises/A+ compatible library (see &#x22; +
-                                &#x22;http://promisesaplus.com/).&#x22;);
-        }
-    }
-
-    function method(name, asserter) {
-        utils.addMethod(Assertion.prototype, name, function () {
-            assertIsAboutPromise(this);
-            return asserter.apply(this, arguments);
-        });
-    }
-
-    function property(name, asserter) {
-        utils.addProperty(Assertion.prototype, name, function () {
-            assertIsAboutPromise(this);
-            return asserter.apply(this, arguments);
-        });
-    }
-
-    function doNotify(promise, done) {
-        promise.then(function () { done(); }, done);
-    }
-
-    // These are for clarity and to bypass Chai refusing to allow `undefined` as actual when used with `assert`.
-    function assertIfNegated(assertion, message, extra) {
-        assertion.assert(true, null, message, extra.expected, extra.actual);
-    }
-
-    function assertIfNotNegated(assertion, message, extra) {
-        assertion.assert(false, message, null, extra.expected, extra.actual);
-    }
-
-    function getBasePromise(assertion) {
-        // We need to chain subsequent asserters on top of ones in the chain already (consider
-        // `eventually.have.property(&#x22;foo&#x22;).that.equals(&#x22;bar&#x22;)`), only running them after the existing ones pass.
-        // So the first base-promise is `assertion._obj`, but after that we use the assertions themselves, i.e.
-        // previously derived promises, to chain off of.
-        return typeof assertion.then === &#x22;function&#x22; ? assertion : assertion._obj;
-    }
-
-    function getReasonName(reason) {
-        return (reason instanceof Error) ? reason.toString() : checkError.getConstructorName(reason);
-    }
-
-    // Grab these first, before we modify `Assertion.prototype`.
-
-    var propertyNames = Object.getOwnPropertyNames(Assertion.prototype);
-
-    var propertyDescs = {};
-    propertyNames.forEach(function (name) {
-        propertyDescs[name] = Object.getOwnPropertyDescriptor(Assertion.prototype, name);
-    });
-
-    property(&#x22;fulfilled&#x22;, function () {
-        var that = this;
-        var derivedPromise = getBasePromise(that).then(
-            function (value) {
-                assertIfNegated(that,
-                                &#x22;expected promise not to be fulfilled but it was fulfilled with #{act}&#x22;,
-                                { actual: value });
-                return value;
-            },
-            function (reason) {
-                assertIfNotNegated(that,
-                                   &#x22;expected promise to be fulfilled but it was rejected with #{act}&#x22;,
-                                   { actual: getReasonName(reason) });
-                return reason;
-            }
-        );
-
-        module.export ...</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.chai-as-promised.toString" id="apidoc.element.chai-as-promised.toString">
-        function <span class="apidocSignatureSpan">chai-as-promised.</span>toString
-        <span class="apidocSignatureSpan">()</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">toString = function () {
-    return toString;
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
         <a href="#apidoc.element.chai-as-promised.transferPromiseness" id="apidoc.element.chai-as-promised.transferPromiseness">
         function <span class="apidocSignatureSpan">chai-as-promised.</span>transferPromiseness
         <span class="apidocSignatureSpan">(assertion, promise)</span>
@@ -363,7 +218,23 @@
     <li>description and source-code<pre class="apidocCodePre">transferPromiseness = function (assertion, promise) {
     assertion.then = promise.then.bind(promise);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+            assertIfNotNegated(that,
+                               &#x22;expected promise to be fulfilled but it was rejected with #{act}&#x22;,
+                               { actual: getReasonName(reason) });
+            return reason;
+        }
+    );
+
+    module.exports.<span class="apidocCodeKeywordSpan">transferPromiseness</span>(that, derivedPromise);
+});
+
+property(&#x22;rejected&#x22;, function () {
+    var that = this;
+    var derivedPromise = getBasePromise(that).then(
+        function (value) {
+            assertIfNotNegated(that,
+...</pre></li>
     </ul>
 
 
@@ -378,7 +249,23 @@
     <li>description and source-code<pre class="apidocCodePre">transformAsserterArgs = function (values) {
     return values;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+        var derivedPromise = getBasePromise(assertion).then(function (value) {
+// Set up the environment for the asserter to actually run: `_obj` should be the fulfillment value, and
+// now that we have the value, we&#x27;re no longer in &#x22;eventually&#x22; mode, so we won&#x27;t run any of this code,
+// just the base Chai code that we get to via the short-circuit above.
+assertion._obj = value;
+utils.flag(assertion, &#x22;eventually&#x22;, false);
+
+return args ? module.exports.<span class="apidocCodeKeywordSpan">transformAsserterArgs</span>(args) : args;
+        }).then(function (args) {
+asserter.apply(assertion, args);
+
+// Because asserters, for example `property`, can change the value of `_obj` (i.e. change the &#x22;object&#x22;
+// flag), we need to communicate this value change to subsequent chained asserters. Since we build a
+// promise chain paralleling the asserter chain, we can use it to communicate such changes.
+return assertion._obj;
+...</pre></li>
     </ul>
 
 
